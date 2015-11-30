@@ -16,7 +16,7 @@
 
 #include "main.h"
 
-#define	APPNAME	"Physics for Game Developers Chapter 8 Example"
+#define	APPNAME	"Test01"
 
 void	DrawLineToDC(HDC hdc, int h1, int v1, int h2, int v2, int thk, COLORREF clr);
 void	DrawRectangleToDC(HDC hdc, RECT *r, int thk, COLORREF borderCLR, COLORREF fillCLR);

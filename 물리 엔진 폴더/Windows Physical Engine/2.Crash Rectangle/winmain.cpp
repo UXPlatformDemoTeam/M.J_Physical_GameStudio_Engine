@@ -15,7 +15,7 @@
 #include "winmain.h"
 
 
-#define	APPNAME	"Test"
+#define	APPNAME	"Test02"
 
 void	DrawLineToDC(HDC hdc, int h1, int v1, int h2, int v2, int thk, COLORREF clr);
 void	DrawRectangleToDC(HDC hdc, RECT *r, int thk, COLORREF borderCLR, COLORREF fillCLR);
