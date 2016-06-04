@@ -68,7 +68,7 @@ public class GL_SpriteBatcher {
 
 		verticesBuffer[bufferIndex++] = draw_right_down_x;
 		verticesBuffer[bufferIndex++] = draw_left_up_y;
-		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_x();
 		verticesBuffer[bufferIndex++] = region.getText_r_d_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_right_down_x;

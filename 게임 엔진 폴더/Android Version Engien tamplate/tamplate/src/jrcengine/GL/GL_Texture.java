@@ -57,8 +57,8 @@ public class GL_Texture {
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
             setFilters(GL10.GL_NEAREST, GL10.GL_NEAREST);
             gl.glBindTexture(GL10.GL_TEXTURE_2D, 0);
-            this.setWidth(bitmap.getWidth());
-            this.setHeight(bitmap.getHeight());
+            setWidth(bitmap.getWidth());
+            setHeight(bitmap.getHeight());
             bitmap.recycle();
         } catch (IOException e) {
             Log_Exception.logEvent("Error Code24", "not exist texture file");
