@@ -8,8 +8,8 @@ import android.media.SoundPool;
  */
 
 public class Sound_Sound implements IFace_Sound {
-	int soundId;
-	SoundPool soundPool;
+	protected int soundId;
+	protected SoundPool soundPool;
 
 	public Sound_Sound(SoundPool soundPool, int soundId) {
 		this.soundId = soundId;

@@ -12,8 +12,8 @@ import android.content.res.AssetManager;
 import android.os.Environment;
 
 public class File_FileIO implements IFace_FileIO {
-	AssetManager assets;
-	String externalStoragePath;
+	protected AssetManager assets;
+	protected String externalStoragePath;
 
 	public File_FileIO(AssetManager assets) {
 		this.assets = assets;

@@ -15,8 +15,8 @@ import android.view.View;
  */
 
 public class Control_Input implements IFace_Input {
-	Handler_Accelerometer accelHandler;
-	IFace_Handler_Touch touchHandler;
+	protected Handler_Accelerometer accelHandler;
+	protected IFace_Handler_Touch touchHandler;
 
 	public Control_Input(Context context, View view, float scaleX, float scaleY) {
 		accelHandler = new Handler_Accelerometer(context);

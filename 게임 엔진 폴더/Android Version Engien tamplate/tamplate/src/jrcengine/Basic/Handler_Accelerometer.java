@@ -9,9 +9,9 @@ import android.hardware.SensorManager;
 
 public class Handler_Accelerometer implements IFace_Handler_Accelerometer,
 		SensorEventListener {
-	float accelX;
-	float accelY;
-	float accelZ;
+	protected float accelX;
+	protected float accelY;
+	protected float accelZ;
 
 	public Handler_Accelerometer(Context context) {
 		SensorManager manager = (SensorManager) context

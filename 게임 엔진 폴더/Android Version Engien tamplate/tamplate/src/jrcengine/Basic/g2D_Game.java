@@ -24,13 +24,13 @@ import android.view.WindowManager;
  */
 
 public abstract class g2D_Game extends Activity implements IFace_Game {
-	g2D_RenderView renderView;
-	IFace_Graphics graphics;
-	IFace_Audio audio;
-	IFace_Input input;
-	IFace_FileIO fileIO;
-	Abstract_Screen screen;
-	WakeLock wakeLock;
+	protected g2D_RenderView renderView;
+	protected IFace_Graphics graphics;
+	protected IFace_Audio audio;
+	protected IFace_Input input;
+	protected IFace_FileIO fileIO;
+	protected Abstract_Screen screen;
+	protected WakeLock wakeLock;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

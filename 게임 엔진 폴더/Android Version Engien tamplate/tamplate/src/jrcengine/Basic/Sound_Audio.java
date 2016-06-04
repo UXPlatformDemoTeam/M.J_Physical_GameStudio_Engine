@@ -26,8 +26,8 @@ import android.media.SoundPool;
 public class Sound_Audio implements IFace_Audio {
 
 	private final int SoundGreatNum = 10; // 동시 재상 가능한 풀 사이즈
-	AssetManager assets;
-	SoundPool soundPool;
+	protected AssetManager assets;
+	protected SoundPool soundPool;
 
 	public Sound_Audio(Activity activity) {
 		activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);

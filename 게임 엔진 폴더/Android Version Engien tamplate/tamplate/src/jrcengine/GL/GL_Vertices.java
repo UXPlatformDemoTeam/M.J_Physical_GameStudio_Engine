@@ -16,13 +16,13 @@ import jrcengine.Basic.GL_Graphics;
  */
 
 public class GL_Vertices {
-	final GL_Graphics glGraphics;
-	final boolean hasColor;
-	final boolean hasTexCoords;
-	final int vertexSize;
-	final IntBuffer vertices;
-	final int[] tmpBuffer;
-	final ShortBuffer indices;
+	protected final GL_Graphics glGraphics;
+	protected final boolean hasColor;
+	protected final boolean hasTexCoords;
+	protected final int vertexSize;
+	protected final IntBuffer vertices;
+	protected final int[] tmpBuffer;
+	protected final ShortBuffer indices;
 
 	public GL_Vertices(GL_Graphics glGraphics, int maxVertices, int maxIndices,
 			boolean hasColor, boolean hasTexCoords) {

@@ -23,12 +23,12 @@ import android.graphics.Rect;
  */
 
 public class g2D_Graphics implements IFace_Graphics {
-	AssetManager assets;
-	Bitmap frameBuffer;
-	Canvas canvas;
-	Paint paint;
-	Rect srcRect = new Rect();
-	Rect dstRect = new Rect();
+	protected AssetManager assets;
+	protected Bitmap frameBuffer;
+	protected Canvas canvas;
+	protected Paint paint;
+	protected Rect srcRect = new Rect();
+	protected Rect dstRect = new Rect();
 
 	public g2D_Graphics(AssetManager assets, Bitmap frameBuffer) {
 		this.assets = assets;

@@ -14,10 +14,10 @@ import android.view.SurfaceView;
 
 public class g2D_RenderView extends SurfaceView implements Runnable
 {
-	g2D_Game game;
-	Bitmap framebuffer;
-	Thread renderThread = null;
-	SurfaceHolder holder;
+	protected g2D_Game game;
+	protected Bitmap framebuffer;
+	protected Thread renderThread = null;
+	protected SurfaceHolder holder;
 	volatile boolean running = false;
 
 	public g2D_RenderView(g2D_Game game, Bitmap framebuffer)

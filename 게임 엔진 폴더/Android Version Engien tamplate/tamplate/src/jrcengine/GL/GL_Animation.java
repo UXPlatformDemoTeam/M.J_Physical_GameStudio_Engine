@@ -9,8 +9,8 @@ public class GL_Animation {
 	public static final int ANIMATION_LOOPING = 0;
 	public static final int ANIMATION_NONLOOPING = 1;
 
-	final GL_TextureRegion[] keyFrames;
-	final float frameDuration;
+	protected final GL_TextureRegion[] keyFrames;
+	protected final float frameDuration;
 
 	public GL_Animation(float frameDuration, GL_TextureRegion... keyFrames) {
 		this.frameDuration = frameDuration;

@@ -9,8 +9,8 @@ import android.graphics.Bitmap;
  */
 
 public class Bmp_Pixmap implements IFace_Pixmap {
-	Bitmap bitmap;
-	PixmapFormat format;
+	protected Bitmap bitmap;
+	protected PixmapFormat format;
 
 	public Bmp_Pixmap(Bitmap bitmap, PixmapFormat format) {
 		this.bitmap = bitmap;

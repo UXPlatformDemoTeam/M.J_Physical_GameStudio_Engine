@@ -25,16 +25,16 @@ public abstract class GL_Game extends Activity implements IFace_Game, Renderer {
 		Initialized, Running, Paused, Finished, Idle
 	}
 
-	GLSurfaceView glView;
-	GL_Graphics glGraphics;
-	IFace_Audio audio;
-	IFace_Input input;
-	IFace_FileIO fileIO;
-	Abstract_Screen screen;
-	GLGameState state = GLGameState.Initialized;
-	Object stateChanged = new Object();
-	long startTime = System.nanoTime();
-	WakeLock wakeLock;
+	protected GLSurfaceView glView;
+	protected GL_Graphics glGraphics;
+	protected IFace_Audio audio;
+	protected IFace_Input input;
+	protected IFace_FileIO fileIO;
+	protected Abstract_Screen screen;
+	protected GLGameState state = GLGameState.Initialized;
+	protected Object stateChanged = new Object();
+	protected long startTime = System.nanoTime();
+	protected WakeLock wakeLock;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

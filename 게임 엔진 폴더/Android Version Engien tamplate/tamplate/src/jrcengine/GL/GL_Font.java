@@ -40,4 +40,17 @@ public class GL_Font {
 			x += glyphWidth;
 		}
 	}
+	
+	public void drawText(GL_SpriteBatcher batcher, String text, float x, float y,float size_x, float size_y, float gap) {
+		int len = text.length();
+		for (int i = 0; i < len; i++) {
+			int c = text.charAt(i) - ' ';
+			if (c < 0 || c > glyphs.length - 1)
+				continue;
+
+			GL_TextureRegion glyph = glyphs[c];
+			batcher.drawSprite(x, y, size_x,  size_y, glyph);
+			x += gap;
+		}
+	}
 }

@@ -5,7 +5,7 @@ import android.util.FloatMath;
 public class Math_Vector {
 	public static float TO_RADIANS = (1 / 180.0f) * (float) Math.PI;
 	public static float TO_DEGREES = (1 / (float) Math.PI) * 180;
-	public float x, y;
+	private float x, y;
 
 	public Math_Vector() {
 	}
@@ -146,4 +146,22 @@ public class Math_Vector {
 		float distY = this.y - y;
 		return distX * distX + distY * distY;
 	}
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+	
+	
 }

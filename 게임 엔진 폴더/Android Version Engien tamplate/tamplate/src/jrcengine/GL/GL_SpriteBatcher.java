@@ -11,10 +11,10 @@ import android.util.FloatMath;
  */
 
 public class GL_SpriteBatcher {
-	final float[] verticesBuffer;
-	int bufferIndex;
-	final GL_Vertices vertices;
-	int numSprites;
+	protected final float[] verticesBuffer;
+	protected int bufferIndex;
+	protected final GL_Vertices vertices;
+	protected int numSprites;
 
 	public GL_SpriteBatcher(GL_Graphics glGraphics, int maxSprites) {
 		this.verticesBuffer = new float[maxSprites * 4 * 4];
@@ -46,6 +46,7 @@ public class GL_SpriteBatcher {
 	public void endBatch() {
 		vertices.setVertices(verticesBuffer, 0, bufferIndex);
 		vertices.bind();
+		
 		vertices.draw(GL10.GL_TRIANGLES, 0, numSprites * 6);
 		vertices.unbind();
 	}
@@ -62,23 +63,23 @@ public class GL_SpriteBatcher {
 
 		verticesBuffer[bufferIndex++] = draw_Left_up_x;
 		verticesBuffer[bufferIndex++] = draw_left_up_y;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_x;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_right_down_x;
 		verticesBuffer[bufferIndex++] = draw_left_up_y;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_x;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_right_down_x;
 		verticesBuffer[bufferIndex++] = draw_right_down_y;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_x;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_Left_up_x;
 		verticesBuffer[bufferIndex++] = draw_right_down_y;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_x;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_y();
 
 		numSprites++;
 	}
@@ -117,23 +118,23 @@ public class GL_SpriteBatcher {
 
 		verticesBuffer[bufferIndex++] = draw_left_down_x;// x1;
 		verticesBuffer[bufferIndex++] = draw_left_down_y;// y1;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_x;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_right_down_x;// x2;
 		verticesBuffer[bufferIndex++] = draw_right_down_y;// y2;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_x;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_right_up_x;// x3;
 		verticesBuffer[bufferIndex++] = draw_right_up_y;// y3;
-		verticesBuffer[bufferIndex++] = region.text_r_d_p_x;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_r_d_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_y();
 
 		verticesBuffer[bufferIndex++] = draw_left_up_x;// x4;
 		verticesBuffer[bufferIndex++] = draw_left_up_y;// y4;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_x;
-		verticesBuffer[bufferIndex++] = region.text_l_u_p_y;
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_x();
+		verticesBuffer[bufferIndex++] = region.getText_l_u_p_y();
 
 		numSprites++;
 	}

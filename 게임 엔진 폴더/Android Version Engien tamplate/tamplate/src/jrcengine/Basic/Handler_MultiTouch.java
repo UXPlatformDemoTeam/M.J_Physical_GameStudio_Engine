@@ -19,14 +19,14 @@ public class Handler_MultiTouch implements IFace_Handler_Touch {
 
 	private final int TouchMaxNum = 20;
 
-	boolean[] isTouched = new boolean[TouchMaxNum];
-	int[] touchX = new int[TouchMaxNum];
-	int[] touchY = new int[TouchMaxNum];
-	Buffer_Buffer<TouchEvent> touchEventPool;
-	List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
-	List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-	float scaleX;
-	float scaleY;
+	protected boolean[] isTouched = new boolean[TouchMaxNum];
+	protected int[] touchX = new int[TouchMaxNum];
+	protected int[] touchY = new int[TouchMaxNum];
+	protected Buffer_Buffer<TouchEvent> touchEventPool;
+	protected List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+	protected List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+	protected float scaleX;
+	protected float scaleY;
 
 	public Handler_MultiTouch(View view, float scaleX, float scaleY) {
 		BufferObjectFactory<TouchEvent> factory = new BufferObjectFactory<TouchEvent>() {

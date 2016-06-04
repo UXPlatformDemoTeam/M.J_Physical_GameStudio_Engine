@@ -17,14 +17,14 @@ import android.view.View;
  */
 
 public class Handler_SingleTouch implements IFace_Handler_Touch {
-	boolean isTouched;
-	int touchX;
-	int touchY;
-	Buffer_Buffer<TouchEvent> touchEventPool;
-	List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
-	List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
-	float scaleX;
-	float scaleY;
+	protected boolean isTouched;
+	protected int touchX;
+	protected int touchY;
+	protected Buffer_Buffer<TouchEvent> touchEventPool;
+	protected List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+	protected List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
+	protected float scaleX;
+	protected float scaleY;
 
 	public Handler_SingleTouch(View view, float scaleX, float scaleY) {
 		BufferObjectFactory<TouchEvent> factory = new BufferObjectFactory<TouchEvent>() {

@@ -14,8 +14,8 @@ import android.media.MediaPlayer.OnCompletionListener;
  */
 
 public class Sound_Music implements IFace_Music, OnCompletionListener {
-	MediaPlayer mediaPlayer;
-	boolean isPrepared = false; // Music'statue Flag
+	protected MediaPlayer mediaPlayer;
+	protected boolean isPrepared = false; // Music'statue Flag
 
 	public Sound_Music(AssetFileDescriptor assetDescriptor) {
 		mediaPlayer = new MediaPlayer();
