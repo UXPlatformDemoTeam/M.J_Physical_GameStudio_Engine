@@ -52,13 +52,15 @@ public class Screen_MainGame extends GL_Screen {
         this.batcher = new GL_SpriteBatcher(glGraphics, 1000);
 
         this.fpsCounter = new Log_TimeCounter();
-        this.move_Point = new Math_Vector(240, 0);
+        this.move_Point = new Math_Vector(Manage_Settings.GAME_WIDTH/2, Manage_Settings.GAME_HEIGHT/2);
         this.touchPoint = new Math_Vector();
 
         this.manage = new MainGame_Manager(Manage_Settings.GAME_WIDTH, Manage_Settings.GAME_HEIGHT);
         this.renderer = new MainGame_Renderer(glGraphics, batcher, manage);
 
-            NetworkModule.setglMainGame(this);
+        NetworkModule.sendPacket(1,
+                Manage_Assets.NetworkProtocol._REQUEST_MOBILE_MAKE_GAME_UNIVERSE + "");
+        NetworkModule.setglMainGame(this);
 
     }
 
@@ -106,6 +108,12 @@ public class Screen_MainGame extends GL_Screen {
                         this.state = GAME_RUNNING;
 
                     }
+                
+                if(GAME_RUNNING == state){
+                    if( len > 0){
+                        move_Point = touchPoint;
+                    }
+                }
 
             }
 
@@ -189,18 +197,15 @@ public class Screen_MainGame extends GL_Screen {
                 break;
         }
 
-        batcher.endBatch();
         gl.glDisable(GL10.GL_BLEND);
         if (Screen_MainMenu.is_Debug)
             fpsCounter.logFrame();
     }
 
     private void presentReady() {
-
     }
 
     private void presentRunning() {
-
     }
 
     private void presentPaused() {

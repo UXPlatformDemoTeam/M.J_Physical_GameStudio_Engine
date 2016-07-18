@@ -22,7 +22,7 @@ public class Game_Start_Manager extends GL_Game {
 
         super.onSurfaceCreated(gl, config);
         if (firstTimeCreate) {
-            //NetworkModule.startClient();
+            NetworkModule.startClient();
             Manage_Settings.load(getFileIO());
             Manage_Assets.load(this);
             

@@ -37,13 +37,34 @@ public class MainGame_Renderer {
     }
 
     private void renderBackground() {
-        }
+        batcher.beginBatch(Manage_Assets.gtBackGround);
+        batcher.drawSprite(Manage_Settings.GAME_WIDTH / 2, Manage_Settings.GAME_HEIGHT / 2,
+                Manage_Settings.GAME_WIDTH, Manage_Settings.GAME_HEIGHT, Manage_Assets.gsBackGround);
+        batcher.endBatch();
+    }
 
     private void renderObjects(float deltaTime) {
         GL10 gl = glGraphics.getGL();
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-   
+        if (manage.getArAsteroids().size() > 0) {
+            batcher.beginBatch(Manage_Assets.gtBoxCycle);
+            for (int i = 0; i < manage.getArAsteroids().size(); i++) {
+                Asteroid asr = manage.getArAsteroids().get(i);
+                batcher.drawSprite(asr.getPosition().getX(), asr.getPosition().getY(), asr
+                        .getRadious_bounds().getRadius(),
+                        asr.getRadious_bounds().getRadius() / 2 * 3, Manage_Assets.gsCycle);
+            }
+            batcher.endBatch();
+        }
+
+        batcher.beginBatch(Manage_Assets.gtBoxCycle);
+        batcher.drawSprite(manage.getPlayAsteroid().getPosition().getX(), manage.getPlayAsteroid()
+                .getPosition().getY(), manage.getPlayAsteroid().getRadious_bounds().getRadius(),
+                manage.getPlayAsteroid().getRadious_bounds().getRadius() / 2 * 3,
+                Manage_Assets.gsCycleBlue);
+        batcher.endBatch();
+
         gl.glDisable(GL10.GL_BLEND);
 
     }

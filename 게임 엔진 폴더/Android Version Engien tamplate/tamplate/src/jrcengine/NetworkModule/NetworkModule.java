@@ -9,6 +9,11 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
+
 import jrcengine.Basic.GL_Game;
 import jrcengine.Basic.GL_Screen;
 import jrcengine.MainGame.Screen_MainGame;
@@ -27,6 +32,9 @@ public class NetworkModule {
 
     private static OutputStream outputStream;
 
+    private static String id = "test";
+
+    private static String password = "1";
 
     private static GL_Screen glMainGame;
 
@@ -44,13 +52,13 @@ public class NetworkModule {
                     socket = new Socket();
                     // set the connection first argument is the server IP
                     // address and next is port number
-                    socket.connect(new InetSocketAddress("123.123.123.123", 1234));
+                    socket.connect(new InetSocketAddress("192.168.0.2", 5001));
 
                     msTimer = new Timer();
                     msSecond = new TimerTask() {
                         public void run() {
-                            //check network
-                            //sendPacket(1, Manage_Assets.NetworkProtocol._ACCESS_THE_SERVER + "");
+
+                            sendPacket(1, Manage_Assets.NetworkProtocol._ACCESS_THE_SERVER + "");
 
                         }
                     };
@@ -67,6 +75,9 @@ public class NetworkModule {
 
                 }
 
+                sendPacket(3, Manage_Assets.NetworkProtocol._REQUEST_MOBILE_LOGIN + "", id,
+                        password);
+
                 receive();
 
             }
@@ -78,37 +89,6 @@ public class NetworkModule {
 
     public static void setglMainGame(GL_Screen gl_game) {
         glMainGame = gl_game;
-    }
-
-    public static void sendPacket(int partitionPacketNumber, String... datas) {
-        String packet = new String();
-
-        packet = packet.concat(partitionPacketNumber + "/");
-
-        for (int i = 0; i < partitionPacketNumber; i++) {
-            packet = packet.concat(datas[i] + "/");
-        }
-        send(packet);
-    }
-
-    public static void send(final String packet) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    byte[] byteArr = packet.getBytes("UTF-8");
-                    outputStream = socket.getOutputStream();
-                    outputStream.write(byteArr);
-                    outputStream.flush();
-                    // System.out.println("[보내기 완료]");
-                } catch (Exception e) {
-                    System.err.println("[서버 통신 안됨] : " + e);
-                    stopClient();
-                }
-            }
-        };
-        thread.setPriority(Thread.MAX_PRIORITY);
-        thread.start();
     }
 
     public static void receive() {
@@ -134,7 +114,7 @@ public class NetworkModule {
                  * processing all packet using next method for splitting the
                  * packet
                  */
-                String[] multiplePackets = splitMultiplePacket(data);
+                String[] multiplePackets = splitMultiplePacket(decrypt(data));
 
                 for (int i = 0; i < multiplePackets.length; i++) {
 
@@ -147,7 +127,22 @@ public class NetworkModule {
                     int protocol = Integer.parseInt(splitPacket[0]);
 
                     switch (protocol) {
+                        case Manage_Assets.NetworkProtocol._ANSWER_LOGIN:
+                            Log.d("mobile Network Module", "Login success id:" + id + " password:"
+                                    + password);
+                            break;
 
+                        case Manage_Assets.NetworkProtocol._ANSWER_MOBILE_MAKE_GAME_UNIVERSE:
+
+                            ((Screen_MainGame)glMainGame).getManage().addAsteroid(
+                                    Float.parseFloat(splitPacket[1]),
+                                    Float.parseFloat(splitPacket[2]));
+                            break;
+
+                        default:
+                            System.err.println("[" + protocol
+                                    + "] this protocol do not exist in the protocol list");
+                            break;
 
                     }
                 }
@@ -163,7 +158,13 @@ public class NetworkModule {
 
     }
 
-    static String[] splitMultiplePacket(String packet) {
+    /**
+     * split the packet to each protocol.
+     * 
+     * @param packet
+     * @return
+     */
+    public static String[] splitMultiplePacket(String packet) {
         int flag;
         int packetNumber = 0;
         String subPacket;
@@ -188,12 +189,19 @@ public class NetworkModule {
         }
     }
 
-    static String[] splitProtocol(String packet) {
-
+    /**
+     * split the protocol to each token
+     * 
+     * @param packet
+     * @return
+     */
+    public static String[] splitProtocol(String packet) {
         int flag = packet.indexOf("/");
+        String subPacket = packet.substring(flag + 1, packet.length());
+        packet = packet.substring(flag + 1, packet.length());
 
-        String subPacket = packet.substring(0, flag);
-
+        flag = subPacket.indexOf("/");
+        subPacket = subPacket.substring(0, flag);
         int packetTokenLength = Integer.parseInt(subPacket);
 
         packet = packet.substring(flag + 1, packet.length());
@@ -217,6 +225,80 @@ public class NetworkModule {
         }
     }
 
+    /**
+     * send message to the game server
+     * 
+     * @param partitionPacketNumber
+     * @param datas
+     */
+    public static void sendPacket(int partitionPacketNumber, String... datas) {
+        String packet = new String();
+
+        packet = packet.concat("/" + partitionPacketNumber + "/");
+
+        for (int i = 0; i < partitionPacketNumber; i++) {
+            packet = packet.concat(datas[i] + "/");
+        }
+        send(packet);
+    }
+
+    /**
+     * send packet
+     * 
+     * @param data
+     */
+    public static void send(final String data) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    byte[] byteArr = encrypt(data).getBytes("UTF-8");
+                    outputStream = socket.getOutputStream();
+                    outputStream.write(byteArr);
+                    outputStream.flush();
+                    // System.out.println("[보내기 완료]");
+                } catch (Exception e) {
+                    System.err.println("[서버 통신 안됨] : " + e);
+                    stopClient();
+                }
+            }
+        };
+        thread.setPriority(Thread.MAX_PRIORITY);
+        thread.start();
+    }
+
+    public static String encrypt(String message) throws Exception {
+
+        // use key coss2
+        SecretKeySpec skeySpec = new SecretKeySpec(
+                Manage_Assets.NetworkProtocol.sEncryptKey.getBytes(), "AES");
+
+        // Instantiate the cipher
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+
+        byte[] encrypted = cipher.doFinal(message.getBytes());
+
+        return new String(Hex.encodeHex(encrypted));
+
+    }
+
+    public static String decrypt(String encrypted) throws Exception {
+
+        // use key coss2
+        SecretKeySpec skeySpec = new SecretKeySpec(
+                Manage_Assets.NetworkProtocol.sEncryptKey.getBytes(), "AES");
+
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+
+        byte[] original = cipher.doFinal(Hex.decodeHex(encrypted.toCharArray()));
+
+        String originalString = new String(original);
+
+        return originalString;
+    }
+    
     public static void stopClient() {
         try {
             if (socket != null && !socket.isClosed()) {

@@ -20,11 +20,17 @@ public class MainGame_Manager extends Screen_Manager {
 
     private final int world_Height;
 
+    private ArrayList<Asteroid> arAsteroids;
+
+    private Player playAsteroid;
 
     public MainGame_Manager(int world_Width, int world_Height) {
 
         this.world_Width = world_Width;
         this.world_Height = world_Height;
+        this.arAsteroids = new ArrayList<Asteroid>();
+        this.playAsteroid = new Player(Manage_Settings.GAME_WIDTH / 2,
+                Manage_Settings.GAME_HEIGHT / 2);
 
         generate();
 
@@ -36,6 +42,9 @@ public class MainGame_Manager extends Screen_Manager {
 
     }
 
+    public void addAsteroid(float x, float y) {
+        arAsteroids.add(new Asteroid(x, y));
+    }
 
     public void update(MainGame_Renderer rander, float deltaTime, float accel_X, float accel_Y,
             float click_X, float click_Y) {
@@ -46,7 +55,14 @@ public class MainGame_Manager extends Screen_Manager {
 
     private void update_Objections(float deltaTime, float accel_X, float accel_Y, float click_X,
             float click_Y) {
+        playAsteroid.setVcMovePoint(click_X, click_Y);
+        playAsteroid.update(deltaTime);
 
+        for (int i = 0; i < arAsteroids.size(); i++) {
+            Asteroid ast = arAsteroids.get(i);
+            ast.setVcMovePoint(playAsteroid.getPosition().getX(), playAsteroid.getPosition().getY());
+            ast.update(deltaTime);
+        }
     }
 
     @Override
@@ -66,6 +82,14 @@ public class MainGame_Manager extends Screen_Manager {
 
     public int get_World_Height() {
         return this.world_Height;
+    }
+
+    public ArrayList<Asteroid> getArAsteroids() {
+        return arAsteroids;
+    }
+
+    public Player getPlayAsteroid() {
+        return playAsteroid;
     }
 
 }
